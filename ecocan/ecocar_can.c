@@ -1,11 +1,12 @@
 #include "ecocar_can.h"
+#include <stdint.h>
 
-fdcanBytes_t mapDlcToBytes(FDCAN_RxHeaderTypeDef *hfdcan) {
+fdcanBytes_t mapDlcToBytes(uint32_t fdcanDlc) {
   fdcanBytes_t bytes;
-  if (hfdcan->DataLength <= FDCAN_DLC_BYTES_8) {
-    return hfdcan->DataLength;
+  if (fdcanDlc <= FDCAN_DLC_BYTES_8) {
+    return fdcanDlc;
   } else {
-    switch (hfdcan->DataLength) {
+    switch (fdcanDlc) {
     case FDCAN_DLC_BYTES_12:
       bytes = FDCAN_BYTES_12;
       break;

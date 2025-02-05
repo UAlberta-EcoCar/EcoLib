@@ -71,6 +71,6 @@ typedef struct {
 /// Map FDCAN enum used by peripheral to actual num of bytes in FDCAN frame 
 /// \param[in]    pointer to rx header of received can msg 
 /// \return value of FDCAN_BYTES enumeration in ecocar_can.h
-fdcanBytes_t mapDlcToBytes(FDCAN_RxHeaderTypeDef *hfdcan);
+fdcanBytes_t mapDlcToBytes(uint32_t fdcanDlc);
 
 #endif
