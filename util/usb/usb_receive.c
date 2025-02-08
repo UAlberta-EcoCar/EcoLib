@@ -15,7 +15,7 @@ extern osMessageQueueId_t usbQueReceiveHandle;
  * to your application should be defined here with
  * the extern key word */
 
-/*#define NEED_FET_STATE_COMMAND 1*/
+#define NEED_FET_STATE_COMMAND
 #ifdef NEED_FET_STATE_COMMAND
 extern fetState_t fet_state;
 #endif

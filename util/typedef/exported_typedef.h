@@ -1,4 +1,3 @@
-
 // Typedefines for FET board state
 typedef enum {
   ALL_FET_OFF = 0x00,
