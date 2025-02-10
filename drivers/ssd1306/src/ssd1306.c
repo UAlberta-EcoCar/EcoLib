@@ -49,7 +49,7 @@ void ssd1306_WriteData(uint8_t* buffer, size_t buff_size) {
 }
 
 #else
-#error "You should define SSD1306_USE_SPI or SSD1306_USE_I2C macro"
+#warning "You should define SSD1306_USE_SPI or SSD1306_USE_I2C macro"
 #endif
 
 
