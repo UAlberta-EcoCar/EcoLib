@@ -1,6 +1,5 @@
 /**
  * Private configuration file for the SSD1306 library.
- * This example is configured for STM32F0, I2C and including all fonts.
  */
 
 #ifndef __SSD1306_CONF_H__
@@ -21,12 +20,12 @@
 #define STM32G4
 
 // Choose a bus
-//#define SSD1306_USE_I2C
+#define SSD1306_USE_I2C
 //#define SSD1306_USE_SPI
 
 // I2C Configuration
-//#define SSD1306_I2C_PORT        hi2c2
-//#define SSD1306_I2C_ADDR        (0x3C << 1)
+#define SSD1306_I2C_PORT        hi2c2
+#define SSD1306_I2C_ADDR        (0x3C << 1)
 
 // SPI Configuration
 //#define SSD1306_SPI_PORT        hspi1
