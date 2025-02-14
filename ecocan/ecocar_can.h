@@ -62,6 +62,22 @@ typedef struct {
   };
 } FDCAN_FetPack_t;
 
+typedef struct {
+  union {
+    struct {
+      uint32_t fc_temp;
+      uint32_t fc_press;
+      uint32_t fan_rpm1;
+      uint32_t fan_rpm2;
+      uint32_t bme_temp;
+      uint32_t bme_humid;
+      uint32_t set_state;
+      uint32_t FILLER;
+    };
+    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_32];
+  };
+} FDCAN_FccPack_t;
+
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
  * number of bytes in the FDCAN frame so we need to map 
