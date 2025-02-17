@@ -6,6 +6,10 @@
 #include "main.h"
 #include "cmsis_os2.h"
 
+// Multiply floats by this value to have precision when transfered
+// on CANBUS
+#define FDCAN_FOUR_FLT_PREC 10000
+
 // Structs must be a certain size for FDCAN to transfer
 // The following package sizes (in bytes) are 0, 1, 2, 3, 4, 5, 6,
 // 7, 8, 12, 16, 20, 24, 32, 48, 64.
