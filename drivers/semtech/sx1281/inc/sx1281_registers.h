@@ -82,7 +82,7 @@ typedef struct {
 } SX128X_Standby_Mode_Config_t;
 
 
-// Used for SetTx, SetRx, SetRxDutyCycle, SetTxDutyCycle
+// Used for SetTx, SetRx, SetRxDutyCycle
 
 typedef enum{
     SX128X_PERIODBASE_15_625μs = 0x00,
@@ -131,5 +131,27 @@ typedef struct {
 
 
 // 11.6.7 SetLongPreamble
+
+#define SX128X_SET_LONG_PREAMBLE_COMMAND_OPCODE 0x9B // Table 11-32
+
+#define SX128X_SET_LONG_PREAMBLE_ENABLE 0x01
+
+
+// 11.6.8 SetCAD
+
+#define SX128X_SET_CAD_COMMAND_OPCODE 0xC5 // Table 11-33
+
+
+// 11.6.9 SetTxContinuousWave
+
+#define SX128X_SET_TX_CONTINUOUS_WAVE_COMMAND_OPCODE 0xD1 // Table 11-34
+
+
+// 11.6.10 SetTxContinuousPreamble
+
+#define SX128X_SET_TX_CONTINUOUS_PREAMBLE_COMMAND_OPCODE 0xD2 // Table 11-35
+
+
+// 11.6.11 SetAutoTx
 
 #endif
