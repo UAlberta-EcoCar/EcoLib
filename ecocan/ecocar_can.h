@@ -42,9 +42,8 @@ typedef enum {
 // ranging from 0x000 to 0x00F
 // All boards must accept these 
 // messages
-#define FDCAN_H2ALAMR_ID 0x001
-
-#define FDCAN_SYNCLED_ID 0x00F
+#define FDCAN_H2ALARM_ID 0x001 // 1 indicates tripped alarm
+#define FDCAN_SYNCLED_ID 0x00F // 1 indicates led on
 
 // HOW TO USE THESE ODD STRUCTS
 // In your main program use any of the below typedefs
@@ -86,10 +85,8 @@ typedef struct {
       uint32_t cap_curr;
       uint32_t res_curr;
       uint32_t out_curr;
-      uint32_t can_sync;
-      uint32_t FILLER;
     };
-    uint8_t FDCAN_RawFetPack[FDCAN_BYTES_32];
+    uint8_t FDCAN_RawFetPack[FDCAN_BYTES_24];
   };
 } FDCAN_FetPack_t;
 
@@ -131,7 +128,7 @@ typedef struct {
       uint32_t imon_7v;
       uint32_t imon_12v;
     };
-    uint8_t FDCAN_RawH2Pack[FDCAN_BYTES_32]
+    uint8_t FDCAN_RawH2Pack[FDCAN_BYTES_32];
   };
 } FDCAN_H2Pack_t;
 
@@ -139,12 +136,12 @@ typedef struct {
 typedef struct {
   union {
     struct {
-      uint32_t placeHolder;
-      uint32_t placeHolder;
-      uint32_t placeHolder;
-      uint32_t placeHolder;
+      uint32_t placeHolder0;
+      uint32_t placeHolder1;
+      uint32_t placeHolder2;
+      uint32_t placeHolder3;
     };
-    uint8_t FDCAN_RawXxxXxxx[FDCAN_BYTES_16]
+    uint8_t FDCAN_RawXxxXxxx[FDCAN_BYTES_16];
   };
 } FDCAN_XxxXxxx_t;
 
