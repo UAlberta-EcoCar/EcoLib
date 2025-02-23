@@ -1,3 +1,8 @@
+/*
+ * EcoCar FDCAN Ids
+ * created by: Nicholas Semmens
+ */
+
 #ifndef ECOCAR_CAN_H_
 #define ECOCAR_CAN_H_
 
@@ -33,6 +38,14 @@ typedef enum {
  FDCAN_BYTES_64 = 64
 } fdcanBytes_t;
 
+// Highest priority CAN messages
+// ranging from 0x000 to 0x00F
+// All boards must accept these 
+// messages
+#define FDCAN_H2ALAMR_ID 0x001
+
+#define FDCAN_SYNCLED_ID 0x00F
+
 // HOW TO USE THESE ODD STRUCTS
 // In your main program use any of the below typedefs
 // and define a new struct such as:
@@ -51,7 +64,19 @@ typedef enum {
 // to FDCAN_RawFetPack in the FDCAN transmit function
 // as the data argument like this:
 // ...function_name(...arguments, &mypack.FDCAN_RawFetPack)
-  
+ 
+// Reserved IDs up to 0x01F
+// 0x010 = 0b00000010000
+// 0x01F = 0b00000011111
+// To receive all can filter ids within
+// this range you must set the mask to 
+// 0x7F0 = 0b11111110000
+// because you care that the bits [10:4]
+// of the can id are exactly the same as 
+// bits [10:4] in 0x010/0x01F but the last
+// four bits [3:0] can be 0 or 1
+// The same logic will be applied henceforth
+#define FDCAN_FETPACK_ID 0x010
 typedef struct {
   union {
     struct {
@@ -61,11 +86,18 @@ typedef struct {
       uint32_t cap_curr;
       uint32_t res_curr;
       uint32_t out_curr;
+      uint32_t can_sync;
+      uint32_t FILLER;
     };
-    uint8_t FDCAN_RawFetPack[FDCAN_BYTES_24];
+    uint8_t FDCAN_RawFetPack[FDCAN_BYTES_32];
   };
 } FDCAN_FetPack_t;
 
+// Reserved IDs up to 0x02F
+// 0x020 = 0b00000100000
+// 0x02F = 0b00000101111
+// Mask: 0x7F0
+#define FDCAN_FCCPACK_ID 0x020
 typedef struct {
   union {
     struct {
@@ -81,6 +113,40 @@ typedef struct {
     uint8_t FDCAN_RawFccPack[FDCAN_BYTES_32];
   };
 } FDCAN_FccPack_t;
+
+// Reserved IDs up to 0x03F
+// 0x030 = 0b00001000000
+// 0x03F = 0b00001001111
+// Mask: 0x7F0
+#define FDCAN_H2PACK_ID 0x030
+typedef struct {
+  union {
+    struct {
+      uint32_t h2_sense_1;
+      uint32_t h2_sense_2;
+      uint32_t h2_sense_3;
+      uint32_t h2_sense_4;
+      uint32_t bme_temp;
+      uint32_t bme_humid;
+      uint32_t imon_7v;
+      uint32_t imon_12v;
+    };
+    uint8_t FDCAN_RawH2Pack[FDCAN_BYTES_32]
+  };
+} FDCAN_H2Pack_t;
+
+#define FDCAN_XXXXXX_ID 0x111
+typedef struct {
+  union {
+    struct {
+      uint32_t placeHolder;
+      uint32_t placeHolder;
+      uint32_t placeHolder;
+      uint32_t placeHolder;
+    };
+    uint8_t FDCAN_RawXxxXxxx[FDCAN_BYTES_16]
+  };
+} FDCAN_XxxXxxx_t;
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
