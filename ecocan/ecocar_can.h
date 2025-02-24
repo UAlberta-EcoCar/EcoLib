@@ -104,12 +104,12 @@ typedef struct {
       uint32_t fan_rpm2;
       uint32_t bme_temp;
       uint32_t bme_humid;
-      uint32_t set_state;
-      uint32_t FILLER;
     };
-    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_32];
+    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_24];
   };
 } FDCAN_FccPack_t;
+
+#define FDCAN_UPDATESTATE_ID 0x021
 
 // Reserved IDs up to 0x03F
 // 0x030 = 0b00001000000

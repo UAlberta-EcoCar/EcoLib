@@ -3,11 +3,11 @@
 #include "exported_typedef.h"
 #include "main.h"
 #include <stdio.h>
+#include "usbd_cdc_if.h"
 
-/* All users must provide a queue for this thread
- * to get the USB string data from
- * */
+/* Users must provide these char queues */
 extern osMessageQueueId_t usbQueReceiveHandle;
+extern osMessageQueueId_t usbQueSendHandle;
 
 /* Add variables as necessary for your application
  * by toggling the commented defines
@@ -20,14 +20,35 @@ extern osMessageQueueId_t usbQueReceiveHandle;
 extern fetState_t fet_state;
 #endif
 
-__weak void doSendUsbTask(void) {
-  /*
-   * User must implement their own function
-   * since it will be highly application
-   * dependent
-   * */
+// Syscall implementation that printf will use
+int _write(int file, char *ptr, int len) {
+  UNUSED(file);
+  for (uint32_t i = 0; i < (uint32_t)len; i++) {
+    if (osMessageQueuePut(usbQueSendHandle, ptr + i, 0, 0) != osOK) {
+      Error_Handler();
+    }
+  }
+  return len;
 }
+
+// Remember to put data into usbQueReceiveHandle from
+// CDC_Receive_FS function in usbd_cdc_if.c
 void doReceiveUsbTask(void);
+
+// User can implement their own usb send task
+__weak void doSendUsbTask(void) {
+  char ret[64];
+  uint8_t iter = 0;
+  if (osMessageQueueGetCount(usbQueSendHandle) > 0) {
+    osDelay(10); // let queue fill up just in case characters are just beginning
+                 // to enter the queue
+    do {
+      osMessageQueueGet(usbQueSendHandle, &ret[iter], 0, 0);
+    } while (ret[iter++] != '\n');
+    // TODO: Verify the iter length is proper for CDC
+    CDC_Transmit_FS((uint8_t *)ret, iter);
+  }
+}
 
 /* Header_StartUsbReceive */
 /**
@@ -38,7 +59,6 @@ void doReceiveUsbTask(void);
 /* USER CODE END Header_StartUsbReceive */
 void StartUsb(void *argument) {
   /* USER CODE BEGIN StartAdcConv */
-
   UNUSED(argument);
   /* Infinite loop */
   for (;;) {
