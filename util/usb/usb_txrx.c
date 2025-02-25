@@ -4,6 +4,7 @@
 #include "main.h"
 #include <stdio.h>
 #include "usbd_cdc_if.h"
+#include "usb_device.h"
 
 /* Users must provide these char queues */
 extern osMessageQueueId_t usbQueReceiveHandle;
@@ -25,7 +26,7 @@ int _write(int file, char *ptr, int len) {
   UNUSED(file);
   for (uint32_t i = 0; i < (uint32_t)len; i++) {
     if (osMessageQueuePut(usbQueSendHandle, ptr + i, 0, 0) != osOK) {
-      Error_Handler();
+      // Error_Handler();
     }
   }
   return len;
@@ -34,21 +35,7 @@ int _write(int file, char *ptr, int len) {
 // Remember to put data into usbQueReceiveHandle from
 // CDC_Receive_FS function in usbd_cdc_if.c
 void doReceiveUsbTask(void);
-
-// User can implement their own usb send task
-__weak void doSendUsbTask(void) {
-  char ret[64];
-  uint8_t iter = 0;
-  if (osMessageQueueGetCount(usbQueSendHandle) > 0) {
-    osDelay(10); // let queue fill up just in case characters are just beginning
-                 // to enter the queue
-    do {
-      osMessageQueueGet(usbQueSendHandle, &ret[iter], 0, 0);
-    } while (ret[iter++] != '\n');
-    // TODO: Verify the iter length is proper for CDC
-    CDC_Transmit_FS((uint8_t *)ret, iter);
-  }
-}
+void doSendUsbTask(void);
 
 /* Header_StartUsbReceive */
 /**
@@ -60,11 +47,15 @@ __weak void doSendUsbTask(void) {
 void StartUsb(void *argument) {
   /* USER CODE BEGIN StartAdcConv */
   UNUSED(argument);
+
+  /* init code for USB_Device */
+  MX_USB_Device_Init();
+
   /* Infinite loop */
   for (;;) {
     doReceiveUsbTask();
     doSendUsbTask();
-    osDelay(1);
+    osDelay(10);
   }
   /* USER CODE END StartAdcConv */
 }
@@ -109,5 +100,22 @@ void doReceiveUsbTask(void) {
     } else {
       printf("ECHO: %s", ret);
     }
-  };
+  }
+}
+
+__weak void doSendUsbTask(void) {
+  char ret[2048] = {0};
+  uint16_t iter = 0;
+  if (osMessageQueueGetCount(usbQueSendHandle) > 0) {
+    osDelay(10); // let queue fill up just in case characters are just beginning
+                 // to enter the queue
+    do {
+       osMessageQueueGet(usbQueSendHandle, &ret[iter], 0, 0);
+       if (iter == 2048) {
+    	   Error_Handler();
+       }
+    } while (ret[iter++] != '\n');
+   // TODO: Verify the iter length is proper for CDC
+   CDC_Transmit_FS((uint8_t *)ret, iter);
+  }
 }
