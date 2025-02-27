@@ -24,6 +24,7 @@ extern fetState_t fet_state;
 // Syscall implementation that printf will use
 int _write(int file, char *ptr, int len) {
   UNUSED(file);
+//  CDC_Transmit_FS((uint8_t *)ptr, len);
   for (uint32_t i = 0; i < (uint32_t)len; i++) {
     if (osMessageQueuePut(usbQueSendHandle, ptr + i, 0, 0) != osOK) {
       // Error_Handler();
@@ -61,7 +62,7 @@ void StartUsb(void *argument) {
 }
 
 void doReceiveUsbTask(void) {
-  char ret[64] = {0}; // Assume received strings are never longer
+  char ret[2048] = {0};
   uint8_t iter = 0;
   if (osMessageQueueGetCount(usbQueReceiveHandle) > 0) {
     do {
@@ -107,15 +108,14 @@ __weak void doSendUsbTask(void) {
   char ret[2048] = {0};
   uint16_t iter = 0;
   if (osMessageQueueGetCount(usbQueSendHandle) > 0) {
-    osDelay(10); // let queue fill up just in case characters are just beginning
-                 // to enter the queue
+	  osDelay(10);
     do {
        osMessageQueueGet(usbQueSendHandle, &ret[iter], 0, 0);
-       if (iter == 2048) {
-    	   Error_Handler();
+       if (iter == 2048 - 1) {
+    	   break;
        }
     } while (ret[iter++] != '\n');
-   // TODO: Verify the iter length is proper for CDC
-   CDC_Transmit_FS((uint8_t *)ret, iter);
+    // TODO: Verify the iter length is proper for CDC
+    CDC_Transmit_FS((uint8_t *)ret, iter);
   }
 }

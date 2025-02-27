@@ -98,7 +98,7 @@ typedef struct {
 typedef struct {
   union {
     struct {
-      uint32_t fc_temp;
+      int32_t fc_temp;
       uint32_t fc_press;
       uint32_t fan_rpm1;
       uint32_t fan_rpm2;
