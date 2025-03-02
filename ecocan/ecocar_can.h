@@ -132,18 +132,18 @@ typedef struct {
   };
 } FDCAN_H2Pack_t;
 
-#define FDCAN_XXXXXX_ID 0x111
+#define FDCAN_BOOSTPACK_ID 0x040
 typedef struct {
   union {
     struct {
-      uint32_t placeHolder0;
-      uint32_t placeHolder1;
-      uint32_t placeHolder2;
-      uint32_t placeHolder3;
+      uint32_t in_curr;
+      uint32_t out_curr;
+      uint32_t in_volt;
+      uint32_t out_volt;
     };
-    uint8_t FDCAN_RawXxxXxxx[FDCAN_BYTES_16];
+    uint8_t FDCAN_RawBOOSTPack[FDCAN_BYTES_16];
   };
-} FDCAN_XxxXxxx_t;
+} FDCAN_BOOSTPack_t;
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
