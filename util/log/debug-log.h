@@ -8,10 +8,12 @@
 #ifndef INC_DEBUG_LOG_H_
 #define INC_DEBUG_LOG_H_
 
-#define log_err(M, ...) printf("[ERROR] (%s:%d) " M "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
+#include "ansi-codes.h"
 
-#define log_warn(M, ...) printf("[WARN] (%s:%d) " M "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
+#define log_err(M, ...) printf(SETBG_RED SETFG_WHITE "[ERROR] (%s:%d) " M FG_DEFAULT BG_DEFAULT "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
 
-#define log_info(M, ...) printf("" M "\r\n", ##__VA_ARGS__)
+#define log_warn(M, ...) printf(SETFG_YELLOW "[WARN] (%s:%d) " M FG_DEFAULT "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
+
+#define log_info(M, ...) printf(SETFG_BLUE "[INFO] (%s: %d) " M FG_DEFAULT "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
 
 #endif /* INC_DEBUG_LOG_H_ */
