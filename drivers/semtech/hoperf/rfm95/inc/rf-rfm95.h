@@ -8,7 +8,7 @@
 #ifndef INC_RF_RFM95_H_
 #define INC_RF_RFM95_H_
 
-#include <stm32l4xx_hal.h>
+#include <stm32g4xx_hal.h>
 #include <stdint.h>
 #include <stdio.h>
 
