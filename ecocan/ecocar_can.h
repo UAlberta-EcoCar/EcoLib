@@ -169,13 +169,22 @@ typedef struct {
   union {
     struct {
       uint32_t in_curr;
-      uint32_t out_curr;
       uint32_t in_volt;
-      uint32_t out_volt;
     };
-    uint8_t FDCAN_RawBOOSTPack[FDCAN_BYTES_16];
+    uint8_t FDCAN_RawBOOSTPack[FDCAN_BYTES_8];
   };
 } FDCAN_BOOSTPack_t;
+
+#define FDCAN_BOOSTPACK2_ID 0x041
+typedef struct {
+  union {
+    struct {
+      uint32_t out_curr;
+      uint32_t out_volt;
+    };
+    uint8_t FDCAN_RawBOOSTPack2[FDCAN_BYTES_8];
+  };
+} FDCAN_BOOSTPack2_t;
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
