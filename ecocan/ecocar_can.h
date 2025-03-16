@@ -126,22 +126,38 @@ typedef struct {
 // 0x020 = 0b00000100000
 // 0x02F = 0b00000101111
 // Mask: 0x7F0
-#define FDCAN_FCCPACK_ID 0x020
+#define FDCAN_FCCPACK1_ID 0x020
 typedef struct {
   union {
     struct {
       int32_t fc_temp;
       uint32_t fc_press;
+    };
+    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_8];
+  };
+} FDCAN_FccPack1_t;
+
+#define FDCAN_FCCPACK2_ID 0x021
+typedef struct {
+  union {
+    struct {
       uint32_t fan_rpm1;
       uint32_t fan_rpm2;
+    };
+    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_8];
+  };
+} FDCAN_FccPack2_t;
+
+#define FDCAN_FCCPACK3_ID 0x022
+typedef struct {
+  union {
+    struct {
       uint32_t bme_temp;
       uint32_t bme_humid;
     };
-    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_24];
+    uint8_t FDCAN_RawFccPack[FDCAN_BYTES_8];
   };
-} FDCAN_FccPack_t;
-
-#define FDCAN_UPDATESTATE_ID 0x021
+} FDCAN_FccPack3_t;
 
 // Reserved IDs up to 0x03F
 // 0x030 = 0b00001000000

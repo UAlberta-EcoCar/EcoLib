@@ -1,3 +1,6 @@
+#ifndef EXPORTED_TYPEDEF_H
+#define EXPORTED_TYPEDEF_H
+
 // Typedefines for FET board state
 typedef enum {
   ALL_FET_OFF = 0x00,
@@ -28,3 +31,5 @@ typedef enum {
   RELAY_CHRGE = RES_RELAY,
   RELAY_RUN = CAP_RELAY | DSCHRGE_RELAY | MTR_RELAY,
 } rbState_t;
+
+#endif

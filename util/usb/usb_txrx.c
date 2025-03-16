@@ -55,7 +55,7 @@ void StartUsb(void *argument) {
   UNUSED(argument);
 
   /* init code for USB_Device */
-  MX_USB_DEVICE_Init();
+  MX_USB_Device_Init();
 
   /* Infinite loop */
   for (;;) {
