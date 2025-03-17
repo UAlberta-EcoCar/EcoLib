@@ -933,7 +933,7 @@ int rf_set_ocp(rf_handle_t *rf_handle, uint8_t rf_ocp_level) {
 }
 
 int rf_packet_rssi(rf_handle_t *rf_handle, int *rf_packet_rssi) {
-
+	*rf_packet_rssi = 0;
 	int offset = -157;
 
 	if (!rf_spi_read_register(rf_handle, RegPktRssiValue, rf_packet_rssi)) {
@@ -947,6 +947,7 @@ int rf_packet_rssi(rf_handle_t *rf_handle, int *rf_packet_rssi) {
 }
 
 int rf_packet_snr(rf_handle_t *rf_handle, int *rf_packet_snr) {
+	*rf_packet_snr = 0;
 	if (!rf_spi_read_register(rf_handle, RegPktSnrValue, rf_packet_snr)) {
 		LOG_ERROR("RSSI ERROR");
 		return 0;
