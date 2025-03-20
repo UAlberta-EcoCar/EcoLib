@@ -15,6 +15,8 @@
 // on CANBUS
 #define FDCAN_FOUR_FLT_PREC 10000
 
+#define ECOCAN_3_FLT_PREC 1000
+
 // Structs must be a certain size for FDCAN to transfer
 // The following package sizes (in bytes) are 0, 1, 2, 3, 4, 5, 6,
 // 7, 8, 12, 16, 20, 24, 32, 48, 64.
@@ -163,22 +165,31 @@ typedef struct {
 // 0x030 = 0b00001000000
 // 0x03F = 0b00001001111
 // Mask: 0x7F0
-#define FDCAN_H2PACK_ID 0x030
+#define ECOCAN_H2_PACK1_ID 0x030
 typedef struct {
 	union {
 		struct {
-			uint32_t h2_sense_1;
-			uint32_t h2_sense_2;
-			uint32_t h2_sense_3;
-			uint32_t h2_sense_4;
-			uint32_t bme_temp;
-			uint32_t bme_humid;
-			uint32_t imon_7v;
-			uint32_t imon_12v;
+			uint16_t h2_sense_1;
+			uint16_t h2_sense_2;
+			uint16_t h2_sense_3;
+			uint16_t h2_sense_4;
 		};
-		uint8_t FDCAN_RawH2Pack[FDCAN_BYTES_32];
+		uint8_t ECOCAN_raw_pack[FDCAN_BYTES_8];
 	};
-} FDCAN_H2Pack_t;
+} ECOCAN_H2Pack1_t;
+
+#define ECOCAN_H2_PACK2_ID 0x031
+typedef struct {
+	union {
+		struct {
+			uint16_t bme_temp;
+			uint16_t bme_humid;
+			uint16_t imon_7v;
+			uint16_t imon_12v;
+		};
+		uint8_t ECOCAN_raw_pack[FDCAN_BYTES_8];
+	};
+} ECOCAN_H2Pack2_t;
 
 #define FDCAN_BOOSTPACK_ID 0x040
 typedef struct {
