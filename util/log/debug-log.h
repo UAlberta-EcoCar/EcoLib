@@ -14,6 +14,8 @@
 
 #define log_warn(M, ...) printf(SETFG_YELLOW "[WARN] (%s:%d) " M FG_DEFAULT "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
 
-#define log_info(M, ...) printf(SETFG_BLUE "[INFO] (%s: %d) " M FG_DEFAULT "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
+#define log_info(M, ...) printf(SETFG_BLUE "[INFO] " M FG_DEFAULT "\r\n", ##__VA_ARGS__)
+
+#define log_critical(M, ...) printf(SETBG_RED FG_RED "[INFO] " M FG_DEFAULT "\r\n", ##__VA_ARGS__)
 
 #endif /* INC_DEBUG_LOG_H_ */
