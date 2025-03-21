@@ -213,6 +213,17 @@ typedef struct {
 	};
 } FDCAN_BOOSTPack2_t;
 
+#define FDCAN_BATTPACK_ID 0x050
+typedef struct {
+	union {
+		struct {
+			uint16_t out_curr;
+			uint16_t out_volt;
+		};
+		uint8_t FDCAN_RawBattPack[FDCAN_BYTES_8];
+	};
+} FDCAN_BOOSTPack2_t;
+
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
  * number of bytes in the FDCAN frame so we need to map
