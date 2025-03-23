@@ -191,6 +191,16 @@ typedef struct {
 	};
 } ECOCAN_H2Pack2_t;
 
+#define ECOCAN_H2_ARM_ALARM_ID 0x032
+typedef struct {
+	union {
+		struct {
+			uint8_t h2_alarm_armed;
+		};
+		uint8_t ECOCAN_raw_pack[FDCAN_BYTES_8];
+	};
+} ECOCAN_H2_ARM_ALARM_t;
+
 #define FDCAN_BOOSTPACK_ID 0x040
 typedef struct {
 	union {
@@ -212,6 +222,17 @@ typedef struct {
 		uint8_t FDCAN_RawBOOSTPack2[FDCAN_BYTES_8];
 	};
 } FDCAN_BOOSTPack2_t;
+
+#define FDCAN_BATTPACK_ID 0x050
+typedef struct {
+	union {
+		struct {
+			uint16_t out_curr;
+			uint16_t out_volt;
+		};
+		uint8_t FDCAN_RawBattPack[FDCAN_BYTES_8];
+	};
+} FDCAN_BOOSTPack3_t;
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
