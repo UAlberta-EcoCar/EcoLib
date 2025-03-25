@@ -699,7 +699,7 @@ int rf_set_bandwidth(rf_handle_t *rf_handle, rf_bandwidth_t bandwidth) {
 
 	rf_get_spread_factor(rf_handle, &sf);
 
-	long symbolDuration = 1000 / (bw / (1L << sf));
+	uint32_t symbolDuration = 1000 / bw * (1L << sf);
 
 	// Section 4.1.1.6
 	int ldoOn = (symbolDuration > 16);
