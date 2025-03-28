@@ -86,7 +86,7 @@ typedef struct {
 		struct {
 			uint8_t txDone :1;
 			uint8_t rxDone :1;
-			uint8_t syncWordValid:1;
+			uint8_t syncWordValid :1;
 			uint8_t syncWordError :1;
 			uint8_t headerValid :1;
 			uint8_t headerError :1;
@@ -124,5 +124,17 @@ typedef struct {
 
 #define SX128X_SET_PACKET_PARAMETERS_COMMAND_OPCODE 0x8C
 
+typedef struct {
+
+	union {
+		struct {
+			uint8_t spreadingFactor;
+			uint8_t bandwidth;
+			uint8_t codingRate;
+		};
+		uint8_t modParams[3];
+	};
+
+} SX128X_Modulation_Parameters_LORA_t;
 
 #endif

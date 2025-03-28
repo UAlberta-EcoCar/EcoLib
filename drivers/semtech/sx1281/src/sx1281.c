@@ -190,6 +190,11 @@ int rf24_write_command(rf24_handle_t *rf24_handle, uint8_t rf24_command_address,
 	return RF24_OK;
 }
 
+int rf24_set_modulation_parameters(rf24_handle_t *rf24_handle,
+		SX128X_Modulation_Parameters_LORA_t rf24_mode) {
+
+}
+
 int rf24_set_packet_parameters(rf24_handle_t *rf24_handle,
 		uint8_t rf24_preamble_length_mantissa,
 		uint8_t rf24_preamble_length_exponent, uint8_t rf24_header_mode,
@@ -209,10 +214,13 @@ int rf24_set_packet_parameters(rf24_handle_t *rf24_handle,
 			buffer, 5);
 }
 
-//int rf24_set_dio_parameters(rf24_handle_t *rf24_handle,
-//		SX128X_IRQ_Register_t rf24_mode) {
-//
-//}
+int rf24_set_dio_parameters(rf24_handle_t *rf24_handle,
+		SX128X_IRQ_Register_t rf24_irq_register) {
+
+	// so writing to the irq register will enable the corresponding inturrupt
+	// writing to the dio mask the intturupt to be handled by that dio will enable that irq.
+
+}
 
 int rf24_set_high_sensitivity_rx(rf24_handle_t *rf24_handle,
 		uint8_t rf24_set_high_sensitivity) {

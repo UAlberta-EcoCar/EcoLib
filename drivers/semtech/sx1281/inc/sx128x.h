@@ -81,7 +81,7 @@ int rf24_set_buffer_base_address(rf24_handle_t *rf24_handle,
 		SX128X_Circuit_Mode_t rf24_mode);
 
 int rf24_set_modulation_parameters(rf24_handle_t *rf24_handle,
-		SX128X_Circuit_Mode_t rf24_mode);
+		SX128X_Modulation_Parameters_LORA_t rf24_mode);
 
 int rf24_set_packet_parameters(rf24_handle_t *rf24_handle,
 		uint8_t rf24_preamble_length_mantissa,
@@ -90,7 +90,7 @@ int rf24_set_packet_parameters(rf24_handle_t *rf24_handle,
 		uint8_t rf24_lora_iq);
 
 int rf24_set_dio_parameters(rf24_handle_t *rf24_handle,
-		SX128X_Circuit_Mode_t rf24_mode);
+		SX128X_IRQ_Register_t rf24_irq_register);
 
 int rf24_set_high_sensitivity(rf24_handle_t *rf24_handle,
 		uint8_t rf24_set_high_sensitivity);
