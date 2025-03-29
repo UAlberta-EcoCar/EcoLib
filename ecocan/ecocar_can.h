@@ -241,11 +241,7 @@ typedef struct {
 		};
 		uint8_t FDCAN_RawBattPack[FDCAN_BYTES_8];
 	};
-<<<<<<< HEAD
-} FDCAN_BOOSTPack3_t;
-=======
 } FDCAN_BATTPack2_t;
->>>>>>> 1572b05 ($)
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual
