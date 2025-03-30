@@ -36,6 +36,8 @@ typedef struct {
 
 	uint32_t rf24_carrier_frequency;
 
+	uint32_t rf24_carrier_frequency_offset;
+
 	uint8_t rf24_rxtx_enable;
 
 } rf24_handle_t;
@@ -74,8 +76,8 @@ int rf24_set_regulator_mode(rf24_handle_t *rf24_handle,
 int rf24_set_packet_type(rf24_handle_t *rf24_handle,
 		SX128X_Circuit_Mode_t rf24_mode);
 
-int rf24_set_frequency(rf24_handle_t *rf24_handle,
-		SX128X_Circuit_Mode_t rf24_mode);
+int rf24_set_frequency(rf24_handle_t *rf24_handle, uint32_t rf24_frequency,
+		uint32_t rf24_offset);
 
 int rf24_set_buffer_base_address(rf24_handle_t *rf24_handle,
 		SX128X_Circuit_Mode_t rf24_mode);

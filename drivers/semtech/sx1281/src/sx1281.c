@@ -9,6 +9,8 @@
 
 #define LOG_INFO(M, ...) printf("[Abi's RFlib SX128X][INFO] " M "\r\n", ##__VA_ARGS__)
 
+#define CHECK_ERROR(X) if (RF24_OK != X) {LOG_ERROR("SPI ERROR"); return RF24_ERROR;}
+
 int rf24_initialize_radio(rf24_handle_t *_rf24_handle) {
 
 	HAL_GPIO_WritePin(_rf24_handle->rf24_nss_port, _rf24_handle->rf24_nss_pin,
@@ -190,8 +192,81 @@ int rf24_write_command(rf24_handle_t *rf24_handle, uint8_t rf24_command_address,
 	return RF24_OK;
 }
 
+int rf24_set_frequency(rf24_handle_t *rf24_handle, uint32_t rf24_frequency,
+		uint32_t rf24_offset) {
+	rf24_handle->rf24_carrier_frequency = rf24_frequency;
+	rf24_handle->rf24_carrier_frequency_offset = rf24_offset;
+
+	uint32_t freq = rf24_frequency + rf24_offset;
+
+	uint8_t buffer[3] = { 0 };
+
+	uint32_t freqtemp = 0;
+	freqtemp = (uint32_t) ((double) rf24_frequency
+			/ (double) SX128X_LORA_FREQ_STEP);
+	buffer[0] = (uint8_t) ((freqtemp >> 16) & 0xFF);
+	buffer[1] = (uint8_t) ((freqtemp >> 8) & 0xFF);
+	buffer[2] = (uint8_t) (freqtemp & 0xFF);
+	CHECK_ERROR(
+			rf24_write_command(rf24_handle, SX128X_LORA_SET_FREQUENCY_COMMAND_OPCODE, buffer, 3))
+
+}
+
+int rf24_set_base_address(rf24_handle_t *rf24_handle,
+		uint8_t rf24_rx_base_address, uint8_t rf24_tx_base_address) {
+
+	uint8_t buffer[2];
+
+	buffer[0] = rf24_rx_base_address;
+	buffer[1] = rf24_tx_base_address;
+
+	CHECK_ERROR(
+			rf24_write_command(rf24_handle, SX128X_LORA_SET_BASE_ADDRESS_COMMAND_OPCODE, buffer, 2))
+
+}
+
 int rf24_set_modulation_parameters(rf24_handle_t *rf24_handle,
-		SX128X_Modulation_Parameters_LORA_t rf24_mode) {
+		SX128X_Modulation_Parameters_LORA_t rf24_modulation_parameters) {
+
+	CHECK_ERROR(
+			rf24_write_command(rf24_handle, SX128X_SET_MODULATION_PARAMETERS_COMMAND_OPCODE, rf24_modulation_parameters.modParams, 3))
+
+	// Table 13-48 Subnote
+
+	// addition on 3.3V datasheet
+	CHECK_ERROR(
+			rf24_spi_write_register(rf24_handle, SX128X_FREQUENCY_ERROR_COMPENSATION_ERROR_MODE_REGISTER, 0x1))
+	// write 0x1 to frequency compensation error mode register.
+
+	switch (rf24_modulation_parameters.spreadingFactor) {
+	case SX128X_LORA_SPREADING_FACTOR_5:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x1E))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_6:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x1E))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_7:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x37))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_8:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x37))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_9:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x32))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_10:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x32))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_11:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x32))
+		break;
+	case SX128X_LORA_SPREADING_FACTOR_12:
+		CHECK_ERROR(rf24_spi_write_register(rf24_handle, 0x925, 0x32))
+		break;
+	default:
+		return RF24_ERROR;
+		break;
+	}
 
 }
 
