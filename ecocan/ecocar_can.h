@@ -14,8 +14,7 @@
 // Multiply floats by this value to have precision when transfered
 // on CANBUS
 #define FDCAN_FOUR_FLT_PREC 10000
-
-#define ECOCAN_3_FLT_PREC 1000
+#define ECOCAN_THREE_FLT_PREC 1000
 
 // Structs must be a certain size for FDCAN to transfer
 // The following package sizes (in bytes) are 0, 1, 2, 3, 4, 5, 6,
@@ -92,6 +91,16 @@ typedef struct {
 	};
 } FDCAN_FetPack_t;
 
+#define FDCAN_RELPACKENERGY_ID 0x014
+typedef struct {
+	union {
+		struct {
+			uint32_t fc_joules;
+			int32_t cap_joules;
+		};
+	};
+	uint8_t FDCAN_RawRelPackNrg[FDCAN_BYTES_8];
+} FDCAN_RelPackNrg_t;
 #define FDCAN_RELPACKMTR_ID 0x015
 typedef struct {
 	union {
@@ -232,7 +241,7 @@ typedef struct {
 		};
 		uint8_t FDCAN_RawBattPack[FDCAN_BYTES_8];
 	};
-} FDCAN_BOOSTPack3_t;
+} FDCAN_BATTPack2_t;
 
 /* The stm32g4xx_fdcan_hal.h file provides enumerated
  * DLC defines but they don't correspond to the actual

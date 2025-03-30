@@ -50,7 +50,7 @@ void doSendUsbTask(void);
  * @retval None
  */
 /* USER CODE END Header_StartUsbReceive */
-void StartUsb(void *argument) {
+void StartUsbTask(void *argument) {
   /* USER CODE BEGIN StartAdcConv */
   UNUSED(argument);
 
