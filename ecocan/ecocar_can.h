@@ -243,6 +243,17 @@ typedef struct {
   };
 } FDCAN_BOOSTPack2_t;
 
+#define FDCAN_BOOSTPACK3_ID 0x042
+typedef struct {
+  union {
+    struct {
+      uint32_t efficiency;
+      //uint32_t out_volt;
+    };
+    uint8_t FDCAN_RawBOOSTPack3[FDCAN_BYTES_8];
+  };
+} FDCAN_BOOSTPack3_t;
+
 #define FDCAN_BATTPACK_ID 0x050
 typedef struct {
   union {
