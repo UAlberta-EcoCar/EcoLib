@@ -91,6 +91,17 @@ typedef struct {
   };
 } FDCAN_FetPack_t;
 
+#define ECOCAN_RELPACKCHARGE_ID 0x013
+typedef struct {
+  union {
+    struct {
+      uint32_t fc_coloumbs;
+      int32_t cap_coloumbs;
+    };
+  };
+  uint8_t ECOCAN_RawRelPackChrg[FDCAN_BYTES_8];
+} ECOCAN_RelPackChrg_t;
+
 #define FDCAN_RELPACKENERGY_ID 0x014
 typedef struct {
   union {
@@ -101,16 +112,6 @@ typedef struct {
   };
   uint8_t FDCAN_RawRelPackNrg[FDCAN_BYTES_8];
 } FDCAN_RelPackNrg_t;
-#define FDCAN_RELPACKCHARGE_ID 0x014
-typedef struct {
-  union {
-    struct {
-      uint32_t fc_coloumbs;
-      int32_t cap_coloumbs;
-    };
-  };
-  uint8_t FDCAN_RawRelPackChrg[FDCAN_BYTES_8];
-} FDCAN_RelPackChrg_t;
 #define FDCAN_RELPACKMTR_ID 0x015
 typedef struct {
   union {
