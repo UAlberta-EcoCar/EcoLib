@@ -54,9 +54,6 @@ void StartUsbTask(void *argument) {
   /* USER CODE BEGIN StartAdcConv */
   UNUSED(argument);
 
-  /* init code for USB_Device */
-  MX_USB_Device_Init();
-
   /* Infinite loop */
   for (;;) {
     doReceiveUsbTask();
