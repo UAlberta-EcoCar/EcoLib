@@ -984,3 +984,40 @@ int rf_set_coding_rate(rf_handle_t *rf_handle, int denominator) {
 	}
 
 }
+
+int rf_enable_crc(rf_handle_t *rf_handle) {
+	rf_register_modem_config_2_t modemconf2 = { 0 };
+
+	if (!rf_spi_read_register(rf_handle, RegModemConfig2,
+			&modemconf2.modem_config_2)) {
+		LOG_ERROR("SPI ERROR");
+		return 0;
+	}
+
+	modemconf2.rx_payload_crc_on = 1;
+
+	if (!rf_spi_write_register(rf_handle, RegModemConfig2,
+			modemconf2.modem_config_2)) {
+		LOG_ERROR("SPI ERROR");
+		return 0;
+	}
+
+}
+
+int rf_disable_crc(rf_handle_t *rf_handle) {
+	rf_register_modem_config_2_t modemconf2 = { 0 };
+
+	if (!rf_spi_read_register(rf_handle, RegModemConfig2,
+			&modemconf2.modem_config_2)) {
+		LOG_ERROR("SPI ERROR");
+		return 0;
+	}
+
+	modemconf2.rx_payload_crc_on = 0;
+
+	if (!rf_spi_write_register(rf_handle, RegModemConfig2,
+			modemconf2.modem_config_2)) {
+		LOG_ERROR("SPI ERROR");
+		return 0;
+	}
+}

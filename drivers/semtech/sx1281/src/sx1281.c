@@ -184,6 +184,14 @@ int rf24_spi_write_register(rf24_handle_t *rf24_handle,
 			&rf24_register_to_write_value, 1);
 }
 
+int rf24_set_packet_type(rf24_handle_t *rf24_handle,
+		SX128X_Packet_Type_t rf24_packet_type) {
+
+	CHECK_ERROR(
+			rf24_write_command(rf24_handle, SX128X_SET_PACKET_TYPE_COMMAND_OPCODE, &rf24_packet_type, 1));
+
+}
+
 int rf24_write_command(rf24_handle_t *rf24_handle, uint8_t rf24_command_address,
 		uint8_t *rf24_command_buffer, uint16_t rf_command_size) {
 

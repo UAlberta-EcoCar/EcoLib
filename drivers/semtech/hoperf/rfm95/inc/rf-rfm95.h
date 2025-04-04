@@ -138,4 +138,8 @@ int rf_packet_snr(rf_handle_t *rf_handle, int *rf_packet_snr);
 
 int rf_set_coding_rate(rf_handle_t *rf_handle, int denominator);
 
+int rf_enable_crc(rf_handle_t *rf_handle);
+
+int rf_disable_crc(rf_handle_t *rf_handle);
+
 #endif /* INC_RF_RFM95_H_ */

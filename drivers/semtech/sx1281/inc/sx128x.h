@@ -54,6 +54,9 @@ int rf24_check_device(rf24_handle_t *_rf24_handle);
 
 int rf24_check_busy(rf24_handle_t *rf24_handle);
 
+int rf24_write_command(rf24_handle_t *rf24_handle, uint8_t rf24_command_address,
+		uint8_t *rf24_command_buffer, uint16_t rf_command_size);
+
 int rf24_spi_write_registers(rf24_handle_t *rf24_handle,
 		uint16_t rf24_register_address, uint8_t *rf24_register_to_write_buffer,
 		uint16_t rf24_write_size);
@@ -74,7 +77,7 @@ int rf24_set_regulator_mode(rf24_handle_t *rf24_handle,
 		SX128X_Circuit_Mode_t rf24_mode);
 
 int rf24_set_packet_type(rf24_handle_t *rf24_handle,
-		SX128X_Circuit_Mode_t rf24_mode);
+		SX128X_Packet_Type_t rf24_packet_type);
 
 int rf24_set_frequency(rf24_handle_t *rf24_handle, uint32_t rf24_frequency,
 		uint32_t rf24_offset);

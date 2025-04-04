@@ -156,4 +156,14 @@ typedef struct {
 #define SX128X_LORA_FREQ_STEP                         198.364
 #define SX128X_LORA_FREQ_ERROR_CORRECTION             1.55
 
+#define SX128X_SET_PACKET_TYPE_COMMAND_OPCODE 0x8A
+
+typedef enum {
+	PACKET_TYPE_GFSK = 0x00,
+	PACKET_TYPE_LORA = 0x01,
+	PACKET_TYPE_RANGING = 0x02,
+	PACKET_TYPE_FLRC = 0x03,
+	PACKET_TYPE_BLE = 0x04
+} SX128X_Packet_Type_t;
+
 #endif
