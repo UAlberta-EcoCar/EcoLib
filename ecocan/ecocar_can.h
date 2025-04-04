@@ -95,22 +95,21 @@ typedef struct {
 typedef struct {
   union {
     struct {
-      uint32_t fc_coloumbs;
+      int32_t fc_coloumbs;
       int32_t cap_coloumbs;
     };
+    uint8_t ECOCAN_RawRelPackChrg[FDCAN_BYTES_8];
   };
-  uint8_t ECOCAN_RawRelPackChrg[FDCAN_BYTES_8];
 } ECOCAN_RelPackChrg_t;
-
 #define FDCAN_RELPACKENERGY_ID 0x014
 typedef struct {
   union {
     struct {
-      uint32_t fc_joules;
+      int32_t fc_joules;
       int32_t cap_joules;
     };
+    uint8_t FDCAN_RawRelPackNrg[FDCAN_BYTES_8];
   };
-  uint8_t FDCAN_RawRelPackNrg[FDCAN_BYTES_8];
 } FDCAN_RelPackNrg_t;
 #define FDCAN_RELPACKMTR_ID 0x015
 typedef struct {
@@ -119,18 +118,18 @@ typedef struct {
       uint32_t mtr_volt;
       uint32_t mtr_curr;
     };
+    uint8_t FDCAN_RawRelPackMtr[FDCAN_BYTES_8];
   };
-  uint8_t FDCAN_RawRelPackMtr[FDCAN_BYTES_8];
 } FDCAN_RelPackMtr_t;
 #define FDCAN_RELPACKCAP_ID 0x016
 typedef struct {
   union {
     struct {
       uint32_t cap_volt;
-      uint32_t cap_curr;
+      int32_t cap_curr;
     };
+    uint8_t FDCAN_RawRelPackCap[FDCAN_BYTES_8];
   };
-  uint8_t FDCAN_RawRelPackCap[FDCAN_BYTES_8];
 } FDCAN_RelPackCap_t;
 #define FDCAN_RELPACKFC_ID 0x017
 typedef struct {
@@ -139,8 +138,8 @@ typedef struct {
       uint32_t fc_volt;
       uint32_t fc_curr;
     };
+    uint8_t FDCAN_RawRelPackFc[FDCAN_BYTES_8];
   };
-  uint8_t FDCAN_RawRelPackFc[FDCAN_BYTES_8];
 } FDCAN_RelPackFc_t;
 #define FDCAN_RELSTATE_ID 0x018
 
