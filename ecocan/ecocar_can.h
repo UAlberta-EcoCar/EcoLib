@@ -247,7 +247,7 @@ typedef struct {
   union {
     struct {
       uint32_t efficiency;
-      //uint32_t out_volt;
+      uint32_t joules;
     };
     uint8_t FDCAN_RawBOOSTPack3[FDCAN_BYTES_8];
   };
