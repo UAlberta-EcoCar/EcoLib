@@ -132,9 +132,9 @@ int rf_read_packet(rf_handle_t *rf_handle, uint8_t rf_recieved_packet_length,
 
 int rf_set_ocp(rf_handle_t *rf_handle, uint8_t rf_ocp_level);
 
-int rf_packet_rssi(rf_handle_t *rf_handle, int *rf_packet_rssi);
+int rf_packet_rssi(rf_handle_t *rf_handle, uint8_t *rf_packet_rssi);
 
-int rf_packet_snr(rf_handle_t *rf_handle, int *rf_packet_snr);
+int rf_packet_snr(rf_handle_t *rf_handle, uint8_t *rf_packet_snr);
 
 int rf_set_coding_rate(rf_handle_t *rf_handle, int denominator);
 

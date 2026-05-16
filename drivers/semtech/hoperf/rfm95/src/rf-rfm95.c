@@ -7,6 +7,7 @@
 #include "rf-rfm95.h"
 
 #include "ansi-codes.h"
+#include <stdint.h>
 
 #define LOG_ERROR(M, ...) printf("[Abi's RFlib]" SETFG_RED "[ERROR] (%s:%d) " M GR_RESET "\r\n", __FILE__, __LINE__, ##__VA_ARGS__)
 
@@ -510,7 +511,7 @@ int rf_listen_implicit(rf_handle_t *rf_handle, uint8_t size) {
 
 int rf_available(rf_handle_t *rf_handle) {
 
-	int num_bytes_recieved = 0;
+	uint8_t num_bytes_recieved = 0;
 
 	if (!rf_spi_read_register(rf_handle, RegRxNbBytes, &num_bytes_recieved)) {
 		LOG_ERROR("SPI ERROR");
@@ -525,13 +526,13 @@ int rf_peek(rf_handle_t *rf_handle, uint8_t *rf_recieved_data) {
 	}
 
 // store current FIFO address
-	int currentAddress = 0;
+	uint8_t currentAddress = 0;
 	if (!rf_spi_read_register(rf_handle, RegFifoAddrPtr, &currentAddress)) {
 		LOG_ERROR("SPI ERROR");
 		return 0;
 	}
 // read
-	if (!rf_spi_read_register(rf_handle, RegFifo, &rf_recieved_data)) {
+	if (!rf_spi_read_register(rf_handle, RegFifo, rf_recieved_data)) {
 		LOG_ERROR("SPI ERROR");
 		return 0;
 	}
@@ -932,9 +933,9 @@ int rf_set_ocp(rf_handle_t *rf_handle, uint8_t rf_ocp_level) {
 
 }
 
-int rf_packet_rssi(rf_handle_t *rf_handle, int *rf_packet_rssi) {
+int rf_packet_rssi(rf_handle_t *rf_handle, uint8_t *rf_packet_rssi) {
 	*rf_packet_rssi = 0;
-	int offset = -157;
+	uint8_t offset = -157;
 
 	if (!rf_spi_read_register(rf_handle, RegPktRssiValue, rf_packet_rssi)) {
 		LOG_ERROR("RSSI ERROR");
@@ -946,7 +947,7 @@ int rf_packet_rssi(rf_handle_t *rf_handle, int *rf_packet_rssi) {
 	return 1;
 }
 
-int rf_packet_snr(rf_handle_t *rf_handle, int *rf_packet_snr) {
+int rf_packet_snr(rf_handle_t *rf_handle, uint8_t *rf_packet_snr) {
 	*rf_packet_snr = 0;
 	if (!rf_spi_read_register(rf_handle, RegPktSnrValue, rf_packet_snr)) {
 		LOG_ERROR("RSSI ERROR");
